@@ -1,18 +1,36 @@
 import java.util.Random;
 
+/**
+ * Represents a deck of playing cards with shuffle, draw, and management capabilities
+ * @author Parusan
+ * @version 1.0
+ */
 public class Deck {
     private Card[] cards;
     
-    // Constructor 1: Takes an existing array of cards
+    /**
+     * Constructs a deck from an existing array of cards
+     * @param cards the array of cards to initialize the deck with
+     * @throws IllegalArgumentException if the card array is null
+     */
     public Deck(Card[] cards) {
+        if (cards == null) {
+            throw new IllegalArgumentException("Card array cannot be null");
+        }
         this.cards = cards;
     }
     
-    // Constructor 2: Creates a full unshuffled deck (52 cards)
+    /**
+     * Constructs a standard 52-card deck with all suits and ranks
+     */
     public Deck() {
         this.cards = generateFullDeck();
     }
     
+    /**
+     * Generates a complete standard deck of 52 playing cards
+     * @return an array containing all 52 standard playing cards
+     */
     private Card[] generateFullDeck() {
         Card[] fullDeck = new Card[52];
         String[] suits = {"Hearts", "Clubs", "Diamonds", "Spades"};
@@ -31,12 +49,18 @@ public class Deck {
         return fullDeck;
     }
     
-    // size() - returns number of cards in deck
+    /**
+     * Returns the number of cards currently in the deck
+     * @return the size of the deck as an integer
+     */
     public int size() {
         return cards.length;
     }
     
-    // draw() - removes and returns the top card (first card in array)
+    /**
+     * Removes and returns the top card from the deck
+     * @return the top card, or null if the deck is empty
+     */
     public Card draw() {
         if (cards.length == 0) {
             return null; // No cards left
@@ -56,8 +80,15 @@ public class Deck {
         return topCard;
     }
     
-    // shuffle() - randomly rearranges the cards
+    /**
+     * Randomly shuffles the order of cards in the deck using Fisher-Yates algorithm
+     * @throws IllegalStateException if attempting to shuffle an empty deck
+     */
     public void shuffle() {
+        if (cards.length == 0) {
+            throw new IllegalStateException("Cannot shuffle an empty deck");
+        }
+        
         Random random = new Random();
         
         // Fisher-Yates shuffle algorithm
@@ -71,10 +102,15 @@ public class Deck {
             cards[randomIndex] = temp;
         }
     }
-      // addCard() - adds a single card to the deck (if not null)
+    
+    /**
+     * Adds a single card to the bottom of the deck
+     * @param card the card to add to the deck
+     * @throws IllegalArgumentException if the card is null
+     */
     public void addCard(Card card) {
         if (card == null) {
-            return; // Don't add null cards
+            throw new IllegalArgumentException("Cannot add null card to deck");
         }
         
         // Create a new array that's one card larger
@@ -92,45 +128,10 @@ public class Deck {
         cards = newDeck;
     }
     
-    // reshuffle() - adds all cards from array and then shuffles
-    public void reshuffle(Card[] newCards) {
-        if (newCards == null) {
-            return; // Nothing to add
-        }
-        
-        // Create a new array that can hold all cards
-        Card[] combinedDeck = new Card[cards.length + newCards.length];
-        
-        // Copy existing cards
-        for (int i = 0; i < cards.length; i++) {
-            combinedDeck[i] = cards[i];
-        }
-        
-        // Add new cards (skip null ones)
-        int currentIndex = cards.length;
-        for (Card card : newCards) {
-            if (card != null) {
-                combinedDeck[currentIndex] = card;
-                currentIndex++;
-            }
-        }
-        
-        // If we skipped null cards, we need to resize the array
-        if (currentIndex < combinedDeck.length) {
-            Card[] finalDeck = new Card[currentIndex];
-            for (int i = 0; i < currentIndex; i++) {
-                finalDeck[i] = combinedDeck[i];
-            }
-            cards = finalDeck;
-        } else {
-            cards = combinedDeck;
-        }
-        
-        // Shuffle the deck after adding cards
-        shuffle();
-    }
-    
-    // Getter for the deck
+    /**
+     * Returns the current array of cards in the deck
+     * @return an array containing all cards in the deck
+     */
     public Card[] getCards() {
         return cards;
     }
