@@ -1,0 +1,13 @@
+K(30%): 100%
+I(30%): 92%
+C(10%): 100%
+A(30%): 98%
+97%
+
+Use the appropriate data structure for it's purpose.  A growing and shrinking data structure should use an ArrayList instead of an array.
+Don't limit your object by placing restrictions on it that don't break your code.  Someone may want to use empty strings, null values or negatives for names/suits/values etc.
+addCard should throw an exception when a null card is attempted to be added
+Reuse your methods (addCard) to reduce code and create a more streamlined version.  Would also reduce number of exceptions.
+Don't throw exceptions that will already happen for you (discardPile == null for example)
+Avoid using methods that are not backwards compatible (isBlank vs isEmpty).  Can be good but can also be bad to use the latest thing!
+Otherwise great work!
